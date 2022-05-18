@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
 const Home: NextPage = ({ results }: any) => {
@@ -16,9 +16,9 @@ const Home: NextPage = ({ results }: any) => {
   );
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response = await fetch(
-    `https://www.rijksmuseum.nl/api/nl/collection?key=${process.env.API_KEY_RIJKMUSEUM}&involvedMaker=Rembrandt+van+Rijn`
+    `https://www.rijksmuseum.nl/api/nl/collection?key=${process.env.RIJKMUSEUM_API_KEY}&involvedMaker=Rembrandt+van+Rijn&relevance&ps=1`
   );
 
   const data = await response.json();
@@ -30,6 +30,6 @@ export async function getServerSideProps() {
       results: data,
     },
   };
-}
+};
 
 export default Home;
