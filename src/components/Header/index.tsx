@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
+
+import { ActiveLink } from "../ActiveLink";
 
 import styles from "./styles.module.scss";
 
@@ -11,14 +12,16 @@ export function Header() {
       <div className={styles.headerContent}>
         <span>Rijksmuseum</span>
         <nav>
-          <Link href="/">
-            <a className={asPath === "/" ? styles.active : ""}>Home</a>
-          </Link>
-          <Link href="/collection" prefetch>
-            <a className={asPath === "/collection" ? styles.active : ""}>
-              Collection
-            </a>
-          </Link>
+          <ActiveLink href="/" activeClassName={styles.active}>
+            <a>Home</a>
+          </ActiveLink>
+          <ActiveLink
+            href="/collection"
+            activeClassName={styles.active}
+            prefetch
+          >
+            <a>Collection</a>
+          </ActiveLink>
         </nav>
       </div>
     </header>
