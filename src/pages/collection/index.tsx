@@ -1,14 +1,42 @@
-import { useState } from "react";
-import type { GetServerSideProps, NextPage } from "next";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import type { NextPage } from "next";
+// import Image from "next/image";
 
+import { useRijksmuseum } from "../../hooks/useRijksmuseum";
 import { Checkbox } from "../../components/Checkbox";
 
 import styles from "./styles.module.scss";
+import { Tag } from "../../components/Tag";
 
-const Collection: NextPage = ({ results }: any) => {
-  const [useImages, setUseImages] = useState(false);
-  const [useTopPieces, setUseTopPieces] = useState(false);
+const Collection: NextPage = () => {
+  const { data, getRijksmuseum } = useRijksmuseum();
+
+  const [imagesOnly, setImagesOnly] = useState(false);
+  const [topPieces, setTopPieces] = useState(false);
+  const [searchColor, setSearchColor] = useState(false);
+  const [term, setTerm] = useState("");
+  const [color, setColor] = useState("");
+  const [currentPage, setCurrentPage] = useState(3);
+
+  const onSubmit = () => {
+    console.log("onSubmit", { imagesOnly, topPieces, term, color });
+    getRijksmuseum({
+      imagesOnly,
+      topPieces,
+      term,
+      color,
+      currentPage,
+    });
+  };
+
+  useEffect(() => {
+    getRijksmuseum({
+      imagesOnly: true,
+      topPieces: true,
+      term: "rembrandt",
+      currentPage: currentPage,
+    });
+  }, []);
 
   return (
     <div className={styles.contentContainer}>
@@ -16,65 +44,126 @@ const Collection: NextPage = ({ results }: any) => {
         <div className={styles.filterContainer}>
           <h2>Options</h2>
 
-          <form>
+          <div className={styles.form}>
             <Checkbox
               label="Images Only"
-              checked={useImages}
-              onChange={(val) => setUseImages(val)}
+              checked={imagesOnly}
+              onChange={(val) => setImagesOnly(val)}
             />
 
             <Checkbox
               label="Top Pieces"
-              checked={useTopPieces}
-              onChange={(val) => setUseTopPieces(val)}
+              checked={topPieces}
+              onChange={(val) => setTopPieces(val)}
             />
 
             <div>
-              <label htmlFor="scales">Term</label>
-              <input type="input" id="scales" name="scales" />
+              <label htmlFor="term">Term</label>
+              <input
+                onChange={(ev) => {
+                  setTerm(ev.target.value);
+                }}
+                type="input"
+                id="term"
+                name="term"
+              />
             </div>
 
-            <div>
-              <label htmlFor="body">Color</label>
-              <input type="color" id="body" name="body" />
-            </div>
+            <Checkbox
+              label="Search by Color"
+              checked={searchColor}
+              onChange={(val) => setSearchColor(val)}
+            />
 
-            <button type="submit" className={styles.searchButton}>
+            {searchColor && (
+              <div>
+                <label htmlFor="color">Color</label>
+                <input
+                  onChange={(ev) => {
+                    setColor(ev.target.value);
+                  }}
+                  type="color"
+                  id="color"
+                  name="color"
+                />
+              </div>
+            )}
+
+            <button onClick={onSubmit} className={styles.searchButton}>
               Apply Filters
             </button>
-          </form>
+          </div>
         </div>
 
         <div className={styles.resultsContainer}>
-          {results && (
-            <Image
-              src={results.artObjects[0].headerImage.url}
-              alt=""
-              width={1800}
-              height={400}
-            />
+          <div className={styles.tags}>
+            <Tag>Images Only: {imagesOnly.toString()}</Tag>
+            <Tag>Top Pieces: {topPieces.toString()}</Tag>
+            <Tag>Term: {term}</Tag>
+            <Tag>Color: {color}</Tag>
+          </div>
+
+          <div className={styles.results}></div>
+
+          {data && data.length && (
+            <>
+              <img
+                src={data[0].headerImage?.url}
+                alt=""
+                width={1080}
+                height={300}
+              />
+              <img
+                src={data[1].headerImage?.url}
+                alt=""
+                width={1080}
+                height={300}
+              />
+              <img
+                src={data[2].headerImage?.url}
+                alt=""
+                width={1080}
+                height={300}
+              />
+              <img
+                src={data[3].headerImage?.url}
+                alt=""
+                width={1080}
+                height={300}
+              />
+
+              {/* 
+              <div>
+                <Image
+                  src={data[1].webImage?.url}
+                  alt=""
+                  layout="intrinsic"
+                  width={200}
+                  height={400}
+                />
+
+                <Image
+                  src={data[2].webImage?.url}
+                  alt=""
+                  layout="intrinsic"
+                  width={200}
+                  height={400}
+                />
+
+                <Image
+                  src={data[3].webImage?.url}
+                  alt=""
+                  layout="intrinsic"
+                  width={200}
+                  height={400}
+                />
+              </div> */}
+            </>
           )}
-          content
         </div>
       </div>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await fetch(
-    `https://www.rijksmuseum.nl/api/nl/collection?key=${process.env.RIJKMUSEUM_API_KEY}&involvedMaker=Rembrandt+van+Rijn&relevance&ps=1`
-  );
-
-  const data = await response.json();
-
-  console.log(data);
-
-  return {
-    props: {
-      results: data,
-    },
-  };
 };
 
 export default Collection;
