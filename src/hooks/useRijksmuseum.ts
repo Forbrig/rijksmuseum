@@ -9,7 +9,14 @@ interface getRijksmuseumProps {
 }
 
 export const useRijksmuseum = () => {
-  const [data, setData] = useState<any[]>([]);
+  const [result, setResult] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentQuery, setCurrentQuery] = useState({
+    imagesOnly: false,
+    topPieces: false,
+    term: "",
+    color: "",
+  });
 
   const getRijksmuseum = async ({
     imagesOnly,
@@ -20,7 +27,7 @@ export const useRijksmuseum = () => {
   }: getRijksmuseumProps) => {
     const query = {
       p: currentPage.toString(),
-      ps: "4",
+      ps: "6",
       key: "c4ULvZBV",
       q: term,
       imgonly: imagesOnly.toString(),
@@ -29,22 +36,20 @@ export const useRijksmuseum = () => {
     // "f.normalized32Colors.hex": color,
     // color && query["f.normalized32Colors.hex"] = color;
 
-    const response = await fetch(
+    await fetch(
       "https://www.rijksmuseum.nl/api/nl/collection?" +
         new URLSearchParams(query),
       {
         method: "GET",
-        mode: "cors", // no-cors, *cors, same-origin
+        mode: "cors",
         cache: "no-cache",
       }
-    );
+    )
+      .then((res) => res.json())
+      .then((res) => setResult(res.artObjects));
     // url: "https://www.rijksmuseum.nl/api/nl/collection",
     // `https://www.rijksmuseum.nl/api/nl/collection?key=c4ULvZBV&involvedMaker=Rembrandt+van+Rijn`
-
-    const data = await response.json();
-
-    await setData(data.artObjects);
   };
 
-  return { getRijksmuseum, data };
+  return { getRijksmuseum, result, currentPage, currentQuery };
 };

@@ -7,16 +7,16 @@ import { Checkbox } from "../../components/Checkbox";
 
 import styles from "./styles.module.scss";
 import { Tag } from "../../components/Tag";
+import { ArtPiece } from "./components/ArtPiece";
 
 const Collection: NextPage = () => {
-  const { data, getRijksmuseum } = useRijksmuseum();
+  const { result, currentPage, getRijksmuseum } = useRijksmuseum();
 
   const [imagesOnly, setImagesOnly] = useState(false);
   const [topPieces, setTopPieces] = useState(false);
   const [searchColor, setSearchColor] = useState(false);
   const [term, setTerm] = useState("");
   const [color, setColor] = useState("");
-  const [currentPage, setCurrentPage] = useState(3);
 
   const onSubmit = () => {
     console.log("onSubmit", { imagesOnly, topPieces, term, color });
@@ -37,6 +37,8 @@ const Collection: NextPage = () => {
       currentPage: currentPage,
     });
   }, []);
+
+  console.log(result);
 
   return (
     <div className={styles.contentContainer}>
@@ -103,63 +105,20 @@ const Collection: NextPage = () => {
             <Tag>Color: {color}</Tag>
           </div>
 
-          <div className={styles.results}></div>
-
-          {data && data.length && (
-            <>
-              <img
-                src={data[0].headerImage?.url}
-                alt=""
-                width={1080}
-                height={300}
-              />
-              <img
-                src={data[1].headerImage?.url}
-                alt=""
-                width={1080}
-                height={300}
-              />
-              <img
-                src={data[2].headerImage?.url}
-                alt=""
-                width={1080}
-                height={300}
-              />
-              <img
-                src={data[3].headerImage?.url}
-                alt=""
-                width={1080}
-                height={300}
-              />
-
-              {/* 
-              <div>
-                <Image
-                  src={data[1].webImage?.url}
-                  alt=""
-                  layout="intrinsic"
-                  width={200}
-                  height={400}
-                />
-
-                <Image
-                  src={data[2].webImage?.url}
-                  alt=""
-                  layout="intrinsic"
-                  width={200}
-                  height={400}
-                />
-
-                <Image
-                  src={data[3].webImage?.url}
-                  alt=""
-                  layout="intrinsic"
-                  width={200}
-                  height={400}
-                />
-              </div> */}
-            </>
-          )}
+          <div className={styles.results}>
+            {result && result.length && (
+              <>
+                {result.map((art) => (
+                  <ArtPiece
+                    key={art.id}
+                    imgUrl={art.webImage?.url}
+                    title={art.title}
+                    subtitle={art.longTitle}
+                  />
+                ))}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

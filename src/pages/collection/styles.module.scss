@@ -50,8 +50,10 @@
 }
 
 .resultsContainer {
+  padding: 2rem;
   border-radius: 2rem;
-  background: var(--cyan-700);
+  background-color: rgba(0, 0, 0, 0.5);
+  height: max-content;
 }
 
 .tags {
@@ -63,10 +65,12 @@
 }
 
 .results {
+  margin-top: 1rem;
   overflow: hidden;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 .searchButton {
