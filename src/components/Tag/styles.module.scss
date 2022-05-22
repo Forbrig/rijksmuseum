@@ -1,0 +1,11 @@
+.tag {
+  display: flex;
+  align-items: center;
+  background: var(--yellow-500);
+  padding: 0.4rem;
+  border-radius: 4rem;
+
+  font-weight: bold;
+
+  max-width: fit-content;
+}
