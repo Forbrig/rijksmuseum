@@ -28,7 +28,11 @@
 }
 
 body {
-  background: var(--gray-900);
+  background-image: url("/rijksmuseum-blured.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 
   color: var(--white);
 }
