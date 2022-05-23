@@ -1,7 +1,3 @@
-import { useEffect, useState } from "react";
-import type { NextPage } from "next";
-// import Image from "next/image";
-
 import styles from "./styles.module.scss";
 
 interface ArtPieceProps {
@@ -10,14 +6,13 @@ interface ArtPieceProps {
   subtitle: string;
 }
 
-export const ArtPiece = ({ imgUrl, title, subtitle }: ArtPieceProps) => {
+export function ArtPiece({ imgUrl, title, subtitle }: ArtPieceProps) {
   return (
     <div className={styles.artpiece}>
       <div
         style={{
           background: `url(${imgUrl})`,
           backgroundRepeat: "no-repeat",
-          // backgroundAttachment: "fixed",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -29,4 +24,4 @@ export const ArtPiece = ({ imgUrl, title, subtitle }: ArtPieceProps) => {
       </div>
     </div>
   );
-};
+}

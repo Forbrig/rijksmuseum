@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-// import Image from "next/image";
 
 import { useRijksmuseum } from "../../hooks/useRijksmuseum";
 import { Checkbox } from "../../components/Checkbox";
+import { Tag } from "../../components/Tag";
+import { ArtPiece } from "../../components/pages/collection/components/ArtPiece";
 
 import styles from "./styles.module.scss";
-import { Tag } from "../../components/Tag";
-import { ArtPiece } from "./components/ArtPiece";
 
 const Collection: NextPage = () => {
   const { result, getRijksmuseum } = useRijksmuseum();
@@ -109,9 +108,9 @@ const Collection: NextPage = () => {
           <div className={styles.results}>
             {result && (
               <>
-                {result.map((art) => (
+                {result.map((art, index) => (
                   <ArtPiece
-                    key={art.id}
+                    key={index}
                     imgUrl={art.webImage?.url}
                     title={art.title}
                     subtitle={art.longTitle}
