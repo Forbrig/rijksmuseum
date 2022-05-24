@@ -27,8 +27,6 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   const id = context.params?.id;
 
-  console.log("id", id);
-
   if (id) {
     try {
       const res = await fetch(

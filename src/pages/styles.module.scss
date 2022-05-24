@@ -4,8 +4,6 @@
   display: flex;
   justify-content: center;
   padding: 4rem;
-
-  color: var(--gray-900);
 }
 
 .content {
@@ -17,7 +15,7 @@
   max-width: 1024px;
 
   border-radius: 2rem;
-  background-color: var(--white);
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 2rem;
 
   > span {
