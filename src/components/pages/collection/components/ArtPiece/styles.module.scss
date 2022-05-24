@@ -1,9 +1,16 @@
 .artpiece {
   display: flex;
   position: relative;
-
   width: 100%;
   height: 240px;
+
+  cursor: pointer;
+
+  transition: transform 0.2s;
+}
+
+.artpiece:hover {
+  transform: scale(1.1);
 }
 
 .content {

@@ -111,6 +111,7 @@ const Collection: NextPage = () => {
                 {result.map((art, index) => (
                   <ArtPiece
                     key={index}
+                    objectNumber={art.objectNumber}
                     imgUrl={art.webImage?.url}
                     title={art.title}
                     subtitle={art.longTitle}

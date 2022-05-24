@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 5rem);
+  padding: 4rem;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2rem;
+  max-width: 1080px;
+
+  border-radius: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  h2 {
+    margin-top: 1rem;
+  }
+  span {
+    margin-top: 0.5rem;
+  }
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+
+  img {
+    height: 100%;
+    width: auto;
+    position: absolute;
+  }
+}

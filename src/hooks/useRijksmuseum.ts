@@ -46,7 +46,11 @@ export const useRijksmuseum = () => {
       }
     )
       .then((res) => res.json())
-      .then((res) => setResult(res.artObjects));
+      .then((res) => {
+        console.log(res);
+
+        setResult(res.artObjects);
+      });
     // url: "https://www.rijksmuseum.nl/api/nl/collection",
     // `https://www.rijksmuseum.nl/api/nl/collection?key=c4ULvZBV&involvedMaker=Rembrandt+van+Rijn`
   };
