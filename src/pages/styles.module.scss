@@ -4,6 +4,14 @@
   display: flex;
   justify-content: center;
   padding: 4rem;
+
+  @media (max-width: 1024px) {
+    padding: 2rem;
+  }
+
+  @media (max-width: 728px) {
+    padding: 1rem;
+  }
 }
 
 .content {

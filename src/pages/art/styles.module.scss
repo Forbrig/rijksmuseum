@@ -4,6 +4,14 @@
   height: calc(100vh - 5rem);
   padding: 4rem;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .content {
