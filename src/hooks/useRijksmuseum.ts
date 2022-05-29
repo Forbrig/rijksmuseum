@@ -11,14 +11,6 @@ interface getCollectionProps {
 
 export const useRijksmuseum = () => {
   const [result, setResult] = useState<any[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentQuery, setCurrentQuery] = useState({
-    imagesOnly: false,
-    topPieces: false,
-    term: "",
-    color: "",
-  });
-
   const [colors, setColors] = useState<string[]>([]);
   const [principalMakers, setPrincipalMakers] = useState<string[]>([]);
 
@@ -48,49 +40,36 @@ export const useRijksmuseum = () => {
         new URLSearchParams(query),
       {
         method: "GET",
-        mode: "cors",
       }
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-
         setResult(res.artObjects);
       });
-    // url: "https://www.rijksmuseum.nl/api/nl/collection",
-    // `https://www.rijksmuseum.nl/api/nl/collection?key=c4ULvZBV&involvedMaker=Rembrandt+van+Rijn`
   };
 
   const getFilterOptions = async () => {
     const query = {
-      q: "",
+      p: "0",
+      ps: "0",
       field: "qualification",
       key: "c4ULvZBV",
     };
 
-    //www.rijksmuseum.nl/en/search/advanced/terms?field=qualification&q=
     await fetch(
       "https://www.rijksmuseum.nl/api/en/collection?" +
         new URLSearchParams(query),
       {
         method: "GET",
-        mode: "cors",
-        cache: "no-cache",
       }
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-
         setPrincipalMakers(
           res.facets[0].facets.map((makers: any) => makers.key)
         );
         setColors(res.facets[6].facets.map((color: any) => color.key.trim("")));
-
-        // setResult(res.artObjects);
       });
-    // url: "https://www.rijksmuseum.nl/api/nl/collection",
-    // `https://www.rijksmuseum.nl/api/nl/collection?key=c4ULvZBV&involvedMaker=Rembrandt+van+Rijn`
   };
 
   return {
@@ -99,7 +78,5 @@ export const useRijksmuseum = () => {
     result,
     colors,
     principalMakers,
-    currentPage,
-    currentQuery,
   };
 };

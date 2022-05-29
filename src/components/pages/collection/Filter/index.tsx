@@ -21,7 +21,7 @@ export function Filter({
 
   useEffect(() => {
     getFilterOptions();
-  }, [getFilterOptions]);
+  }, []);
 
   return (
     <div className={styles.filter}>
@@ -107,8 +107,8 @@ export function Filter({
                   }
                   style={{
                     backgroundColor: `${color}`,
-                    height: "20px",
-                    width: "20px",
+                    height: "40px",
+                    width: "40px",
                   }}
                 />
               ))}

@@ -42,7 +42,7 @@ const Collection: NextPage = () => {
       ...filterOptions,
       currentPage,
     });
-  }, [currentPage, filterOptions, getCollection]);
+  }, [currentPage]);
 
   return (
     <div className={styles.container}>
