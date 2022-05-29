@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import { useRijksmuseum } from "../../hooks/useRijksmuseum";
 
 import { Tag } from "../../components/Tag";
-import { ArtPiece } from "../../components/pages/collection/components/ArtPiece";
+import { ArtPiece } from "./components/ArtPiece";
 import { Filter } from "./components/Filter";
 
 import styles from "./styles.module.scss";
@@ -30,6 +30,7 @@ const Collection: NextPage = () => {
   });
 
   const onSubmit = async () => {
+    await setCurrentPage(1);
     await getCollection({
       ...filterOptions,
       currentPage,
@@ -72,21 +73,7 @@ const Collection: NextPage = () => {
             )}
           </div>
 
-          <div className={styles.arts}>
-            {result && (
-              <>
-                {result.map((art, index) => (
-                  <ArtPiece
-                    key={index}
-                    objectNumber={art.objectNumber}
-                    imgUrl={art.webImage?.url}
-                    title={art.title}
-                    subtitle={art.longTitle}
-                  />
-                ))}
-              </>
-            )}
-
+          {!!result.length && (
             <div className={styles.pagination}>
               {currentPage !== 1 && (
                 <button
@@ -108,6 +95,48 @@ const Collection: NextPage = () => {
                 Next
               </button>
             </div>
+          )}
+
+          <div className={styles.arts}>
+            {result && !!result.length ? (
+              <>
+                {result.map((art, index) => (
+                  <ArtPiece
+                    key={index}
+                    objectNumber={art.objectNumber}
+                    imgUrl={art.webImage?.url}
+                    title={art.title}
+                    subtitle={art.longTitle}
+                  />
+                ))}
+              </>
+            ) : (
+              <h2>No results matching the selected filter.</h2>
+            )}
+
+            {!!result.length && (
+              <div className={styles.pagination}>
+                {currentPage !== 1 && (
+                  <button
+                    onClick={async () => {
+                      await setCurrentPage(currentPage - 1);
+                    }}
+                  >
+                    Prev
+                  </button>
+                )}
+
+                <div className={styles.paginationNumber}>{currentPage}</div>
+
+                <button
+                  onClick={async () => {
+                    await setCurrentPage(currentPage + 1);
+                  }}
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
