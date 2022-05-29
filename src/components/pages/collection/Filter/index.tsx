@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FilterFields } from "../..";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-import { Checkbox } from "../../../../components/Checkbox";
 import { useRijksmuseum } from "../../../../hooks/useRijksmuseum";
+import { FilterFields } from "../../../../pages/collection";
+import { Checkbox } from "../../../Checkbox";
 
 import styles from "./styles.module.scss";
 
@@ -21,7 +21,7 @@ export function Filter({
 
   useEffect(() => {
     getFilterOptions();
-  }, []);
+  }, [getFilterOptions]);
 
   return (
     <div className={styles.filter}>

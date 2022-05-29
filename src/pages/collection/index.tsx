@@ -3,9 +3,9 @@ import type { NextPage } from "next";
 
 import { useRijksmuseum } from "../../hooks/useRijksmuseum";
 
+import { Filter } from "../../components/pages/collection/Filter";
+import { ArtPiece } from "../../components/pages/collection/ArtPiece";
 import { Tag } from "../../components/Tag";
-import { ArtPiece } from "./components/ArtPiece";
-import { Filter } from "./components/Filter";
 
 import styles from "./styles.module.scss";
 
@@ -42,7 +42,7 @@ const Collection: NextPage = () => {
       ...filterOptions,
       currentPage,
     });
-  }, [currentPage]);
+  }, [currentPage, filterOptions, getCollection]);
 
   return (
     <div className={styles.container}>
