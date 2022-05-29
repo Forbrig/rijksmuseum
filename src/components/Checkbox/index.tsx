@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 
 interface CheckboxProps {
   checked: boolean;
-  onChange: Dispatch<SetStateAction<boolean>>;
+  onChange: Dispatch<SetStateAction<any>>;
   label: string;
 }
 

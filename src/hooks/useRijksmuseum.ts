@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface getRijksmuseumProps {
+interface getCollectionProps {
   imagesOnly: boolean;
   topPieces: boolean;
   term: string;
@@ -19,14 +19,17 @@ export const useRijksmuseum = () => {
     color: "",
   });
 
-  const getRijksmuseum = async ({
+  const [colors, setColors] = useState<string[]>([]);
+  const [principalMakers, setPrincipalMakers] = useState<string[]>([]);
+
+  const getCollection = async ({
     imagesOnly,
     topPieces,
     term,
     searchColor,
     color,
     currentPage,
-  }: getRijksmuseumProps) => {
+  }: getCollectionProps) => {
     const query = {
       p: currentPage.toString(),
       ps: "6",
@@ -41,12 +44,11 @@ export const useRijksmuseum = () => {
     }
 
     await fetch(
-      "https://www.rijksmuseum.nl/api/nl/collection?" +
+      "https://www.rijksmuseum.nl/api/en/collection?" +
         new URLSearchParams(query),
       {
         method: "GET",
         mode: "cors",
-        cache: "no-cache",
       }
     )
       .then((res) => res.json())
@@ -59,5 +61,45 @@ export const useRijksmuseum = () => {
     // `https://www.rijksmuseum.nl/api/nl/collection?key=c4ULvZBV&involvedMaker=Rembrandt+van+Rijn`
   };
 
-  return { getRijksmuseum, result, currentPage, currentQuery };
+  const getFilterOptions = async () => {
+    const query = {
+      q: "",
+      field: "qualification",
+      key: "c4ULvZBV",
+    };
+
+    //www.rijksmuseum.nl/en/search/advanced/terms?field=qualification&q=
+    await fetch(
+      "https://www.rijksmuseum.nl/api/en/collection?" +
+        new URLSearchParams(query),
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+
+        setPrincipalMakers(
+          res.facets[0].facets.map((makers: any) => makers.key)
+        );
+        setColors(res.facets[6].facets.map((color: any) => color.key.trim("")));
+
+        // setResult(res.artObjects);
+      });
+    // url: "https://www.rijksmuseum.nl/api/nl/collection",
+    // `https://www.rijksmuseum.nl/api/nl/collection?key=c4ULvZBV&involvedMaker=Rembrandt+van+Rijn`
+  };
+
+  return {
+    getCollection,
+    getFilterOptions,
+    result,
+    colors,
+    principalMakers,
+    currentPage,
+    currentQuery,
+  };
 };

@@ -2,113 +2,77 @@ import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 
 import { useRijksmuseum } from "../../hooks/useRijksmuseum";
-import { Checkbox } from "../../components/Checkbox";
+
 import { Tag } from "../../components/Tag";
 import { ArtPiece } from "../../components/pages/collection/components/ArtPiece";
+import { Filter } from "./components/Filter";
 
 import styles from "./styles.module.scss";
 
+export interface FilterFields {
+  imagesOnly: boolean;
+  topPieces: boolean;
+  term: string;
+  searchColor: boolean;
+  color: string;
+}
+
 const Collection: NextPage = () => {
-  const { result, getRijksmuseum } = useRijksmuseum();
+  const { result, getCollection } = useRijksmuseum();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [imagesOnly, setImagesOnly] = useState(true);
-  const [topPieces, setTopPieces] = useState(true);
-  const [searchColor, setSearchColor] = useState(false);
-  const [term, setTerm] = useState("rembrandt");
-  const [color, setColor] = useState("#000000");
+  const [filterOptions, setFilterOptions] = useState<FilterFields>({
+    imagesOnly: true,
+    topPieces: true,
+    term: "rembrandt",
+    searchColor: false,
+    color: "",
+  });
 
   const onSubmit = async () => {
-    // console.log(imagesOnly, topPieces, term, color, currentPage);
-
-    await getRijksmuseum({
-      imagesOnly,
-      topPieces,
-      term,
-      searchColor,
-      color,
+    await getCollection({
+      ...filterOptions,
       currentPage,
     });
   };
 
   useEffect(() => {
-    getRijksmuseum({
-      imagesOnly,
-      topPieces,
-      term,
-      searchColor,
-      color,
+    getCollection({
+      ...filterOptions,
       currentPage,
     });
   }, [currentPage]);
 
   return (
-    <div className={styles.contentContainer}>
+    <div className={styles.container}>
       <div>
-        <div className={styles.filterContainer}>
-          <h2>Options</h2>
+        <Filter
+          onSubmit={onSubmit}
+          filterOptions={filterOptions}
+          setFilterOptions={setFilterOptions}
+        />
 
-          <div className={styles.form}>
-            <Checkbox
-              label="Images Only"
-              checked={imagesOnly}
-              onChange={(val) => setImagesOnly(val)}
-            />
-
-            <Checkbox
-              label="Top Pieces"
-              checked={topPieces}
-              onChange={(val) => setTopPieces(val)}
-            />
-
-            <div>
-              <label htmlFor="term">Term</label>
-              <input
-                onChange={(ev) => {
-                  setTerm(ev.target.value);
-                }}
-                value={term}
-                type="input"
-                id="term"
-                name="term"
-              />
-            </div>
-
-            <Checkbox
-              label="Search by Color"
-              checked={searchColor}
-              onChange={(val) => setSearchColor(val)}
-            />
-
-            {searchColor && (
-              <div>
-                <label htmlFor="color">Color</label>
-                <input
-                  onChange={(ev) => {
-                    setColor(ev.target.value);
-                  }}
-                  type="color"
-                  id="color"
-                  name="color"
-                />
-              </div>
-            )}
-
-            <button onClick={onSubmit} className={styles.searchButton}>
-              Apply Filters
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.resultsContainer}>
+        <div className={styles.results}>
           <div className={styles.tags}>
-            <Tag>Images Only: {imagesOnly.toString()}</Tag>
-            <Tag>Top Pieces: {topPieces.toString()}</Tag>
-            <Tag>Term: {term}</Tag>
-            {searchColor && <Tag>Color: {color}</Tag>}
+            <Tag>Images Only: {filterOptions.imagesOnly.toString()}</Tag>
+            <Tag>Top Pieces: {filterOptions.topPieces.toString()}</Tag>
+            <Tag>Term: {filterOptions.term}</Tag>
+            {filterOptions.searchColor && (
+              <Tag>
+                Color: {filterOptions.color}{" "}
+                <div
+                  style={{
+                    backgroundColor: `${filterOptions.color}`,
+                    height: "20px",
+                    width: "20px",
+                    marginLeft: "4px",
+                  }}
+                />
+              </Tag>
+            )}
           </div>
 
-          <div className={styles.results}>
+          <div className={styles.arts}>
             {result && (
               <>
                 {result.map((art, index) => (

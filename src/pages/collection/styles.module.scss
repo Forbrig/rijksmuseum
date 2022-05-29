@@ -1,4 +1,4 @@
-.contentContainer {
+.container {
   width: 100%;
   height: calc(100vh - 5rem);
   display: flex;
@@ -62,41 +62,7 @@
   }
 }
 
-.filterContainer {
-  border-radius: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  height: max-content;
-  padding: 2rem;
-
-  > .form {
-    width: 100%;
-
-    > div {
-      margin-top: 10px;
-    }
-
-    label {
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
-
-    button,
-    input,
-    input[type="color"] {
-      width: 100%;
-    }
-
-    input {
-      height: 50px;
-      border-radius: 8px;
-      padding: 0 16px;
-      background: var(--white);
-      border: 1px solid var(--cyan-700);
-    }
-  }
-}
-
-.resultsContainer {
+.results {
   padding: 2rem;
   border-radius: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
@@ -110,7 +76,7 @@
   gap: 1rem;
 }
 
-.results {
+.arts {
   margin-top: 1rem;
   width: 100%;
   display: grid;
@@ -124,16 +90,6 @@
 
 .searchButton {
   margin-top: 1.5rem;
-}
-
-.checkbox {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  label {
-    margin-left: 10px;
-  }
 }
 
 .pagination {
@@ -166,4 +122,9 @@
     color: var(--cyan-700);
     font-weight: bold;
   }
+}
+
+.colors {
+  display: inline-flex;
+  flex-wrap: wrap;
 }
