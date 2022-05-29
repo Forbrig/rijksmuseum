@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import styles from "./styles.module.scss";
 
@@ -18,14 +19,16 @@ export function ArtPiece({
   return (
     <Link href={`art/${objectNumber}`}>
       <div className={styles.artpiece}>
-        <div
-          style={{
-            background: `url(${imgUrl})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+        <Image
           className={styles.image}
+          quality={25}
+          src={`https://res.cloudinary.com/demo/image/fetch/${imgUrl}`}
+          alt={title}
+          loading="lazy"
+          layout="fill"
+          objectFit="cover"
+          width={960}
+          height={230}
         />
         <div className={styles.content}>
           <h3>{title}</h3>

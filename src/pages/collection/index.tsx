@@ -104,7 +104,7 @@ const Collection: NextPage = () => {
                   <ArtPiece
                     key={index}
                     objectNumber={art.objectNumber}
-                    imgUrl={art.webImage?.url}
+                    imgUrl={art.headerImage?.url}
                     title={art.title}
                     subtitle={art.longTitle}
                   />
