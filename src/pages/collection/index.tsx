@@ -16,15 +16,16 @@ const Collection: NextPage = () => {
   const [topPieces, setTopPieces] = useState(true);
   const [searchColor, setSearchColor] = useState(false);
   const [term, setTerm] = useState("rembrandt");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#000000");
 
   const onSubmit = async () => {
-    console.log(imagesOnly, topPieces, term, color, currentPage);
+    // console.log(imagesOnly, topPieces, term, color, currentPage);
 
     await getRijksmuseum({
       imagesOnly,
       topPieces,
       term,
+      searchColor,
       color,
       currentPage,
     });
@@ -35,6 +36,8 @@ const Collection: NextPage = () => {
       imagesOnly,
       topPieces,
       term,
+      searchColor,
+      color,
       currentPage,
     });
   }, [currentPage]);
@@ -102,7 +105,7 @@ const Collection: NextPage = () => {
             <Tag>Images Only: {imagesOnly.toString()}</Tag>
             <Tag>Top Pieces: {topPieces.toString()}</Tag>
             <Tag>Term: {term}</Tag>
-            <Tag>Color: {color}</Tag>
+            {searchColor && <Tag>Color: {color}</Tag>}
           </div>
 
           <div className={styles.results}>

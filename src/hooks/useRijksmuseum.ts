@@ -4,7 +4,8 @@ interface getRijksmuseumProps {
   imagesOnly: boolean;
   topPieces: boolean;
   term: string;
-  color?: string;
+  searchColor: boolean;
+  color: string;
   currentPage: number;
 }
 
@@ -22,6 +23,7 @@ export const useRijksmuseum = () => {
     imagesOnly,
     topPieces,
     term,
+    searchColor,
     color,
     currentPage,
   }: getRijksmuseumProps) => {
@@ -33,8 +35,10 @@ export const useRijksmuseum = () => {
       imgonly: imagesOnly.toString(),
       toppieces: topPieces.toString(),
     };
-    // "f.normalized32Colors.hex": color,
-    // color && query["f.normalized32Colors.hex"] = color;
+
+    if (searchColor) {
+      Object.assign(query, { "f.normalized32Colors.hex": color });
+    }
 
     await fetch(
       "https://www.rijksmuseum.nl/api/nl/collection?" +
