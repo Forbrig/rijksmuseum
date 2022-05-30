@@ -10,6 +10,10 @@
 - Hide the api key on `.local.dev` and load dinamically.
 - Create/follow a design.
 - Improve the search engine filtering.
+- Add loading states.
+- More info on the art details.
+- Last page rule (don't show the `Next` button).
+- Pass the filter parameters via url. This allows the user going back to the same filter via page history, sharing the url, etc.
 
 ## Getting Started
 
