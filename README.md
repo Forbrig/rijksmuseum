@@ -7,7 +7,7 @@
 
 ## To be done
 
-- Hide the api key on `.local.dev` and load dinamically.
+- ~~Hide the api key on `.local.dev` and load dinamically.~~
 - Create/follow a design.
 - Improve the search engine filtering.
 - Add loading states.
@@ -22,6 +22,8 @@ Install the packages:
 ```bash
 yarn
 ```
+
+Add your API KEY for rijksmuseum api. Base yourself in `.env.local.example` file. You can follow [this guide](https://data.rijksmuseum.nl/object-metadata/api/#access-to-apis) to get your own API key.
 
 First, run the development server:
 
