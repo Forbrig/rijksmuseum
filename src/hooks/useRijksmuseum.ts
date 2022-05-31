@@ -25,7 +25,7 @@ export const useRijksmuseum = () => {
     const query = {
       p: currentPage.toString(),
       ps: "6",
-      key: "c4ULvZBV",
+      key: process.env.NEXT_PUBLIC_RIJKMUSEUM_API_KEY as string,
       q: term,
       imgonly: imagesOnly.toString(),
       toppieces: topPieces.toString(),
@@ -53,7 +53,7 @@ export const useRijksmuseum = () => {
       p: "0",
       ps: "0",
       field: "qualification",
-      key: "c4ULvZBV",
+      key: process.env.NEXT_PUBLIC_RIJKMUSEUM_API_KEY as string,
     };
 
     await fetch(

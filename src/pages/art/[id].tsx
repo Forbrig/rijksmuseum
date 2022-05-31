@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (
   if (id) {
     try {
       const res = await fetch(
-        `https://www.rijksmuseum.nl/api/en/collection/${id}?key=c4ULvZBV`
+        `https://www.rijksmuseum.nl/api/en/collection/${id}?key=${process.env.NEXT_PUBLIC_RIJKMUSEUM_API_KEY}`
       );
 
       const data = await res.json();
